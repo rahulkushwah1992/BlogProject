@@ -1,0 +1,26 @@
+services:
+  db:
+    ports:
+       - 5432:5432
+    container_name: postgresql_container
+    image: postgres
+    environment:
+        - POSTGRES_DB=postgres_database_ldz8
+        - POSTGRES_PASSWORD=JVhmITvulKBHMtUZwgXQV3pacS0B02Mc
+        - POSTGRES_USER=rahul
+    volumes:
+      - /custom/mount:/var/lib/postgresql/data
+    restart: always 
+  backend:
+    build: .
+    container_name: Blog-Application_container
+    ports:
+      - 8089:8089
+    environment:
+      db-url: jdbc:postgresql://dpg-cs3mg808fa8c73de1fpg-a:5432/postgres_database_ldz8
+      db-username: rahul
+      db.password: JVhmITvulKBHMtUZwgXQV3pacS0B02Mc
+    depends_on:
+      - dpg-cs3mg808fa8c73de1fpg-a
+    restart: always
+	
